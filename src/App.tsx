@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Products from './components/Products'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component<any, any> {
+  handleAddToCart: any;
+
+  /**
+   *
+   */
+  state = {
+    products: [],
+    filteredProducts: []
+
+  }
+
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  componentDidMount = () => {
+    fetch("https://fakestoreapi.com/products")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          products: data,
+          filteredProducts: data
+        })
+      })
+  }
+
+
+  render() {
+    return (
+      <div className="Container">
+        <h1>Online store using react</h1>
+        <hr />
+        <div className="col-md-8">
+          <Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart} />
+        </div>
+
+        <div className="col-md-4">
+
+        </div>
+      </div>
+    );
+  }
+
 }
 
 export default App;
