@@ -1,4 +1,5 @@
 import React from 'react';
+import { json } from 'stream/consumers';
 import './App.css';
 import Basket from './components/Basket';
 import Filter from './components/Filter';
@@ -38,6 +39,10 @@ class App extends React.Component<any, any> {
 
         })
       })
+
+    if (localStorage.getItem("cartItems")) {
+      this.setState({ cartItems: JSON.parse(localStorage.getItem("cartItems")) })
+    }
   }
 
   handleChangeSort = (e) => {
@@ -90,7 +95,7 @@ class App extends React.Component<any, any> {
         cartItems.push({ ...product, count: 1 })
       }
 
-      localStorage.setItem("cartItems",JSON.stringify(cartItems));
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return cartItems;
     })
   }
