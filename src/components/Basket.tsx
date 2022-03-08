@@ -24,9 +24,10 @@ class Basket extends Component<any> {
                             )}
                         </ul>
                         Total: {formatCurrency(cartItems.reduce((a, c) => a + c.price * c.count, 0))} {/* Can be extracted to a helper function */}
-
                     </div>
                 }
+                <button className="btn btn-primary" onClick={(e) => alert("Checkout needs to be implemented...")}></button>
+
             </div>
         );
     }
