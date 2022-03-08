@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import Basket from './components/Basket';
 import Filter from './components/Filter';
 import Products from './components/Products'
 
 class App extends React.Component<any, any> {
-  handleAddToCart: any;
+  handleRemoveCart: any;
 
   constructor(props) {
     super(props);
@@ -13,9 +14,12 @@ class App extends React.Component<any, any> {
       filteredProducts: [],
       category: '',
       categories: [],
-      sort: ''
+      sort: '',
+      cartItems: []
     }
     this.handleChangeSort = this.handleChangeSort.bind(this);
+    this.handleChangeCategory = this.handleChangeCategory.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
   componentDidMount = () => {
@@ -58,7 +62,8 @@ class App extends React.Component<any, any> {
         return {
           filteredProducts: state.products.filter((p) =>
             p.category.indexOf(state.category) >= 0
-            )}
+          )
+        }
       }
 
       return { filteredProducts: state.products }
@@ -69,6 +74,25 @@ class App extends React.Component<any, any> {
     (console.log("handleChangeCategory"))
     this.setState({ category: e.target.value })
     this.listProducts()
+  }
+
+  handleAddToCart(e, product) {
+    this.setState(state => {
+      const cartItems = state.cartItems;
+      let productAlreadyInCart = false;
+      cartItems.forEach(item => {
+        if (item.id === product.id) {
+          productAlreadyInCart = true;
+          item.count++;
+        }
+      });
+      if (!productAlreadyInCart) {
+        cartItems.push({ ...product, count: 1 })
+      }
+
+      localStorage.setItem("cartItems",JSON.stringify(cartItems));
+      return cartItems;
+    })
   }
 
   render() {
@@ -88,7 +112,7 @@ class App extends React.Component<any, any> {
         </div>
 
         <div className="col-md-4">
-
+          <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveCart}></Basket>
         </div>
       </div>
     );
