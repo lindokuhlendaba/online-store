@@ -6,7 +6,6 @@ import Filter from './components/Filter';
 import Products from './components/Products'
 
 class App extends React.Component<any, any> {
-  handleRemoveCart: any;
 
   constructor(props) {
     super(props);
@@ -21,6 +20,7 @@ class App extends React.Component<any, any> {
     this.handleChangeSort = this.handleChangeSort.bind(this);
     this.handleChangeCategory = this.handleChangeCategory.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
   }
 
   componentDidMount = () => {
@@ -82,6 +82,7 @@ class App extends React.Component<any, any> {
   }
 
   handleAddToCart(e, product) {
+    (console.log("handleAddToCart"))
     this.setState(state => {
       const cartItems = state.cartItems;
       let productAlreadyInCart = false;
@@ -97,6 +98,17 @@ class App extends React.Component<any, any> {
 
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return cartItems;
+    })
+  }
+
+
+  handleRemoveFromCart(e, item) {
+    (console.log("handleRemoveFromCart"))
+
+    this.setState(state => {
+      const cartItems = state.cartItems.filter(elm => elm.id !== item.id);
+      localStorage.setItem("cartItems", cartItems);
+      return { cartItems }
     })
   }
 
@@ -117,7 +129,7 @@ class App extends React.Component<any, any> {
         </div>
 
         <div className="col-md-4">
-          <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveCart}></Basket>
+          <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart}></Basket>
         </div>
       </div>
     );
