@@ -6,15 +6,13 @@ import Products from './components/Products'
 class App extends React.Component<any, any> {
   handleAddToCart: any;
 
-  /**
-   *
-   */
   constructor(props) {
     super(props);
     this.state = {
       products: [],
       filteredProducts: [],
       category: '',
+      categories: [],
       sort: ''
     }
     this.handleChangeSort = this.handleChangeSort.bind(this);
@@ -24,15 +22,19 @@ class App extends React.Component<any, any> {
     fetch("https://fakestoreapi.com/products")
       .then(res => res.json())
       .then(data => {
+        const categories = data.map(x => x.category)
+          .filter((category, index, arr) => arr.indexOf(category) === index)
+          .sort();;
+
         this.setState({
           products: data,
           filteredProducts: data,
           category: '',
+          categories: categories
 
         })
       })
   }
-  handleChangeCategory: any;
 
   handleChangeSort = (e) => {
     (console.log("handleChangeSort"))
@@ -51,8 +53,22 @@ class App extends React.Component<any, any> {
       } else {
         state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
       }
+
+      if (state.category !== "") {
+        return {
+          filteredProducts: state.products.filter((p) =>
+            p.category.indexOf(state.category) >= 0
+            )}
+      }
+
       return { filteredProducts: state.products }
     })
+  }
+
+  handleChangeCategory = (e) => {
+    (console.log("handleChangeCategory"))
+    this.setState({ category: e.target.value })
+    this.listProducts()
   }
 
   render() {
@@ -62,6 +78,7 @@ class App extends React.Component<any, any> {
         <hr />
         <div className="col-md-8">
           <Filter category={this.state.category}
+            categories={this.state.categories}
             handleChangeCategory={this.handleChangeCategory}
             count={this.state.filteredProducts.length}
             sort={this.state.sort}
