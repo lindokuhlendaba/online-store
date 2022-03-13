@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { formatCurrency } from '../helpers/util';
 
 export default class Products extends Component<any>{
@@ -8,12 +9,19 @@ export default class Products extends Component<any>{
         const productItems = this.props.products.map(product => (
             <div className="col-xs-6 col-md-3" key={product.id}>
                 <div className="thumbnail text-center">
-                    <a href={`#${product.id}`} onClick={this.props.handleAddToCart}>
+                    {/* <a href={`#${product.id}`} onClick={(e) =>this.props.handleAddToCart(e, product)}>
                         <img src={product.image} alt={product.title} />
                         <div className="caption">
                             {product.title}
                         </div>
-                    </a>
+                    </a> */}
+                    <Link to={'/product/' + product.id} >
+                        {/* <a href={`#${product.id}`} onClick={(e)=>this.props.handleAddToCart(e, product)} > */}
+                        <img src={product.image} alt={product.title} />
+                        {/* <img src={`./products/${product.sku}_2.jpg`} alt={product.title} /> */}
+                        <p>{product.title}</p>
+                        {/* </a> */}
+                    </Link>
                     <div>
                         <b>{formatCurrency(product.price)}</b>
                         <button className="btn btn-primary" onClick={(e) => this.props.handleAddToCart(e, product)}>Add To Cart</button>
