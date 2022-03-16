@@ -9,18 +9,11 @@ export default class Products extends Component<any>{
         const productItems = this.props.products.map(product => (
             <div className="col-xs-6 col-md-3" key={product.id}>
                 <div className="thumbnail text-center">
-                    {/* <a href={`#${product.id}`} onClick={(e) =>this.props.handleAddToCart(e, product)}>
+                    <Link to={'/product/' + product.id} >
                         <img src={product.image} alt={product.title} />
                         <div className="caption">
                             {product.title}
                         </div>
-                    </a> */}
-                    <Link to={'/product/' + product.id} >
-                        {/* <a href={`#${product.id}`} onClick={(e)=>this.props.handleAddToCart(e, product)} > */}
-                        <img src={product.image} alt={product.title} />
-                        {/* <img src={`./products/${product.sku}_2.jpg`} alt={product.title} /> */}
-                        <p>{product.title}</p>
-                        {/* </a> */}
                     </Link>
                     <div>
                         <b>{formatCurrency(product.price)}</b>

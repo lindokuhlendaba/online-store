@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import { Route } from "react-router";
 import './App.css';
-import Product from './components/Product';
 import ProductsContainer from './ProductsContainer';
+import GetId from './components/ProductDetail';
 
 class App extends React.Component<any, any> {
   render() {
@@ -15,7 +15,7 @@ class App extends React.Component<any, any> {
           <Routes>
             <Route path='/' element={<ProductsContainer />} />
             <Route path='/products' element={<ProductsContainer />} />
-            <Route path="/product/:id" element={props => (<Product {...props} id={this.state} />)} />
+            <Route path='/product/:id' element={<GetId />} />
           </Routes>
 
         </BrowserRouter>
