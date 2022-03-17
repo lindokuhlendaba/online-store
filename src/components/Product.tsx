@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { formatCurrency } from '../helpers/util';
 
 class Product extends Component<any, any> {
 
@@ -35,21 +36,29 @@ class Product extends Component<any, any> {
                     <Link to="/products">Back to Products</Link>
                 </div>
                 <h1>{title}</h1>
-                <div className="details">
-                    <div className="details-image" key={id}>
-                        <img src={image} alt={title} width="300" height="300" />
+
+                <div className="row">
+                    <div className="col-md-4">
+                        <div className="details-image" key={id}>
+                            <img src={image} alt={title} width="300" height="300" />
+                        </div>
                     </div>
-                    <div className="details-info">
-                        <ul>
-                            <li>
-                                Price: <b>${price}</b>
-                            </li>
-                            <li>
-                                Description:
-                                <div>{description}</div>
-                            </li>
-                        </ul>
+
+                    <div className="col-md-4">
+                        <div className="details-info">
+                            <b>Description:</b>
+                            <div>{description}</div>
+                        </div>
+                        <br></br>
+                        <div className="details-info">
+                            <b>Price:</b>
+                            <div><b>{formatCurrency(price)}</b></div>
+                        </div>
                     </div>
+
+                    {/* <div className="col-md-4">
+                        <button className="btn btn-primary btn-lg" onClick={(e) => this.props.handleAddToCart(e, this.state.product)}>Add To Cart</button>
+                    </div> */}
                 </div>
             </div>
         )
